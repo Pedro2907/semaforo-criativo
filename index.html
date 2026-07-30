@@ -63,6 +63,18 @@
   .regra{background:#1B4332; color:#fff; border-radius:16px; padding:18px; margin-bottom:14px;}
   .regra h3{font-size:17px; margin-bottom:6px;}
   .regra p{font-size:15px; line-height:1.5; color:#dfe8e2;}
+  /* Roteiro */
+  #view-rot{display:none;}
+  .chips{display:-webkit-flex; display:flex; -webkit-flex-wrap:wrap; flex-wrap:wrap; margin:0 -4px 6px;}
+  .chip{margin:4px; padding:12px 14px; border-radius:12px; border:1.5px solid #dfe8e2; background:#fff; font-weight:700; font-size:14.5px; color:#25302a; cursor:pointer; -webkit-appearance:none;}
+  .chip.sel{background:#1B4332; border-color:#1B4332; color:#fff;}
+  .chip small{display:block; font-weight:400; font-size:11.5px; margin-top:2px; color:inherit; opacity:.75;}
+  .bloco-card{background:#fff; border:1px solid #dfe8e2; border-radius:14px; padding:14px 16px; margin-bottom:8px; box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .bloco-num{display:inline-block; background:#9C6644; color:#fff; font-weight:800; font-size:13px; border-radius:8px; padding:2px 9px; margin-right:8px;}
+  .bloco-t{font-weight:800; font-size:16px; color:#1B4332;}
+  .bloco-i{font-size:15px; line-height:1.5; margin-top:6px;}
+  .bloco-e{font-size:14.5px; line-height:1.45; margin-top:8px; padding:10px; background:#f0f5f1; border-radius:8px; color:#2D6A4F; font-style:italic;}
+  .rot-nota{background:#FBF3E6; border:1.5px solid #9C6644; border-radius:12px; padding:14px; font-size:14.5px; line-height:1.55; margin-top:12px;}
 </style>
 </head>
 <body>
@@ -73,6 +85,7 @@
 
   <div class="tabs">
     <button type="button" class="tab ativa" id="tab-sem">🚦 Semáforo</button>
+    <button type="button" class="tab" id="tab-rot">🧱 Roteiro</button>
     <button type="button" class="tab" id="tab-dic">📖 Dicionário</button>
   </div>
 
@@ -120,6 +133,21 @@
     <div class="foot">Faixas calibradas com benchmarks de beauty DTC Brasil + a conta da L'Amazonie (jul/2026 · AOV R$209 · ROAS alvo 2,45x). O Pedro atualiza quando a meta mudar.</div>
   </div>
 
+  <!-- ===== VIEW ROTEIRO ===== -->
+  <div id="view-rot">
+    <div class="regra">
+      <h3>MONTE O ROTEIRO COMO LEGO</h3>
+      <p>Todo roteiro é <b>Gancho → Corpo → CTA</b>. O corpo é feito de blocos. Escolha pra quem é o vídeo e a receita — eu monto o esqueleto e você dá vida na câmera. (Método dos Blocos de Construção — Malu Celestino)</p>
+    </div>
+    <div class="card">
+      <div class="step">1. Pra quem é esse vídeo? (o ângulo)</div>
+      <div class="chips" id="rot-angs"></div>
+      <div class="step" style="margin-top:14px;">2. Qual receita?</div>
+      <div class="chips" id="rot-recs"></div>
+    </div>
+    <div id="rot-out"></div>
+  </div>
+
   <div class="foot" id="foot-sem">Referências: beauty DTC Brasil + conta L'Amazonie (jul/2026 · AOV R$209 · ROAS alvo 2,45x).<br>
   Regra da casa: conserta o PRIMEIRO sinal vermelho da fila — Hook → Retenção → Clique → Compra.</div>
 </div>
@@ -129,13 +157,97 @@
 /* ================= NAVEGAÇÃO ================= */
 var tabSem = document.getElementById('tab-sem');
 var tabDic = document.getElementById('tab-dic');
+var tabRot = document.getElementById('tab-rot');
 var viewSem = document.getElementById('view-sem');
 var viewDic = document.getElementById('view-dic');
+var viewRot = document.getElementById('view-rot');
 var footSem = document.getElementById('foot-sem');
-function mostraSem(){ tabSem.className='tab ativa'; tabDic.className='tab'; viewSem.style.display='block'; viewDic.style.display='none'; footSem.style.display='block'; }
-function mostraDic(){ tabDic.className='tab ativa'; tabSem.className='tab'; viewDic.style.display='block'; viewSem.style.display='none'; footSem.style.display='none'; }
-tabSem.onclick = mostraSem;
-tabDic.onclick = mostraDic;
+function mostra(qual){
+  tabSem.className = (qual==='sem') ? 'tab ativa' : 'tab';
+  tabDic.className = (qual==='dic') ? 'tab ativa' : 'tab';
+  tabRot.className = (qual==='rot') ? 'tab ativa' : 'tab';
+  viewSem.style.display = (qual==='sem') ? 'block' : 'none';
+  viewDic.style.display = (qual==='dic') ? 'block' : 'none';
+  viewRot.style.display = (qual==='rot') ? 'block' : 'none';
+  footSem.style.display = (qual==='sem') ? 'block' : 'none';
+}
+tabSem.onclick = function(){ mostra('sem'); };
+tabDic.onclick = function(){ mostra('dic'); };
+tabRot.onclick = function(){ mostra('rot'); };
+
+/* ================= ROTEIRO (Blocos de Construção — Malu) ================= */
+var ANGULOS = [
+  { id:'pinca', nome:'Arrependida da pinça', hook:'"Eu destruí minhas sobrancelhas com a pinça. Se você também, me dá 30 segundos."' },
+  { id:'genetica', nome:'Genética', hook:'"Nunca tive sobrancelha. Achava que era genética e pronto... até isso."' },
+  { id:'posparto', nome:'Pós-parto / queda', hook:'"Depois do meu bebê, minha sobrancelha caiu tanto que eu evitava foto de frente."' },
+  { id:'estresse', nome:'Estresse & rotina', hook:'"Do nada minha sobrancelha começou a falhar. Descobri o porquê."' },
+  { id:'menopausa', nome:'40+ / menopausa', hook:'"Depois dos 40, minha sobrancelha simplesmente parou de nascer. Isso mudou."' }
+];
+var BLOCOS = {
+  gancho:{t:'Gancho', i:'Os 3 primeiros segundos. Primeira palavra já forte, zero respiro antes dela. É aqui que o dedo para (ou não).', e:'ANGLE_HOOK'},
+  problema:{t:'Problema', i:'Descreve a dor com as palavras que a cliente usa no dia a dia — frase de comentário de Instagram, não de embalagem.', e:'"Toda foto eu aparecia com a sobrancelha pela metade. Eu me achava sem expressão."'},
+  altfalha:{t:'Alternativa Falha', i:'Mostra o que ela já tentou e que não resolveu: lápis, rímel de sobrancelha, henna. Isso desarma o "já tentei de tudo".', e:'"Eu desenhava com lápis TODO santo dia. Suou? Borrou. Chuva? Apagou."'},
+  resultado:{t:'Resultado Desejado', i:'Pinta a cena que ela quer viver — simples e emocional, sem promessa de prazo.', e:'"Eu só queria acordar, me olhar no espelho e sair de casa sem precisar me desenhar."'},
+  antesdepois:{t:'Antes e Depois', i:'Mostra a evolução de forma natural: a sobrancelha no vídeo, sem zoom dramático na falha e SEM datas ("em 30 dias" não existe).', e:'"Olha como tava... e olha agora." (mostrando a sobrancelha na câmera, luz natural)'},
+  prova:{t:'Prova Social', i:'Deixa as outras clientes venderem por você: comentários, quantidade de clientes, avaliações.', e:'"Não é só comigo — lê os comentários desse anúncio."'},
+  storytelling:{t:'Storytelling', i:'Mini-história com começo, virada e fim. Uma cena concreta vale mais que dez adjetivos.', e:'"No batizado da minha filha, eu chorei... e junto foi metade da minha sobrancelha desenhada."'},
+  intro:{t:'Introdução do Produto', i:'Apresenta o produto pelo nome + o que ele é em UMA frase. Sem enrolação técnica.', e:'"Esse é o Sérum de Sobrancelhas da L\'Amazonie — um sérum que fortalece e faz os fios crescerem mais fortes."'},
+  demonstracao:{t:'Demonstração', i:'Mostra o gesto real: o pincel, a aplicação na sobrancelha, a textura. Quem vê o gesto se imagina usando.', e:'(aplicando na câmera) "Um passadinha de manhã, uma antes de dormir. 10 segundos."'},
+  beneficios:{t:'Benefícios', i:'Traduz característica em benefício pra vida dela. Teto da promessa: fortalece, nutre, fios mais fortes — sem claim médico.', e:'"Vegano, sem hormônio, e trata enquanto modela — menos etapa na rotina, não mais."'},
+  experiencia:{t:'Experiência de Compra', i:'Tira o medo da compra: kit mais vendido, entrega, facilidade. Objeção de compra se mata aqui, não no CTA.', e:'"Eu peguei o kit com 2 porque sai mais em conta — chegou em poucos dias."'},
+  unboxing:{t:'Unboxing', i:'Abre a embalagem na câmera. O som e a textura do produto criam desejo — capricha na luz e no áudio.', e:'(abrindo a caixa) "Gente, olha isso... até a embalagem é linda."'},
+  cta:{t:'CTA', i:'UM convite direto, sem gritaria. Produto na tela + o convite. Se tiver oferta, é aqui que ela entra.', e:'"Toca no link e conhece. O kit 2 é o mais vendido."'}
+};
+var RECEITAS = [
+  { id:'historia', nome:'A História Dela', sub:'A nº1 pra público frio: dor → virada', blocos:['gancho','problema','altfalha','resultado','prova','cta'] },
+  { id:'demo', nome:'Demonstração', sub:'Pra quem quer ver como funciona', blocos:['gancho','intro','demonstracao','beneficios','cta'] },
+  { id:'story', nome:'Storytelling + Prova', sub:'Narrativa pessoal com virada', blocos:['gancho','storytelling','antesdepois','prova','cta'] },
+  { id:'unboxing', nome:'Unboxing & Compra', sub:'Desejo + tirar o medo de comprar', blocos:['gancho','unboxing','demonstracao','experiencia','cta'] }
+];
+var selAng = null, selRec = null;
+var angsDiv = document.getElementById('rot-angs');
+var recsDiv = document.getElementById('rot-recs');
+var rotOut = document.getElementById('rot-out');
+
+function renderChips(){
+  var h = '';
+  for (var a = 0; a < ANGULOS.length; a++){
+    h += '<button type="button" class="chip' + (selAng === a ? ' sel' : '') + '" data-a="' + a + '">' + ANGULOS[a].nome + '</button>';
+  }
+  angsDiv.innerHTML = h;
+  h = '';
+  for (var r = 0; r < RECEITAS.length; r++){
+    h += '<button type="button" class="chip' + (selRec === r ? ' sel' : '') + '" data-r="' + r + '">' + RECEITAS[r].nome + '<small>' + RECEITAS[r].sub + '</small></button>';
+  }
+  recsDiv.innerHTML = h;
+  var ab = angsDiv.getElementsByClassName('chip');
+  for (var i = 0; i < ab.length; i++){
+    (function(btn){ btn.onclick = function(){ selAng = parseInt(btn.getAttribute('data-a'), 10); renderChips(); renderRoteiro(); }; })(ab[i]);
+  }
+  var rb = recsDiv.getElementsByClassName('chip');
+  for (var j = 0; j < rb.length; j++){
+    (function(btn){ btn.onclick = function(){ selRec = parseInt(btn.getAttribute('data-r'), 10); renderChips(); renderRoteiro(); }; })(rb[j]);
+  }
+}
+function renderRoteiro(){
+  if (selAng === null || selRec === null){
+    rotOut.innerHTML = (selAng !== null || selRec !== null) ? '<div class="sub">Falta escolher ' + (selAng === null ? 'o ângulo' : 'a receita') + '...</div>' : '';
+    return;
+  }
+  var ang = ANGULOS[selAng], rec = RECEITAS[selRec];
+  var h = '<div class="step" style="margin:4px 0 10px;">Roteiro: ' + rec.nome + ' × ' + ang.nome + '</div>';
+  for (var b = 0; b < rec.blocos.length; b++){
+    var bl = BLOCOS[rec.blocos[b]];
+    var ex = (bl.e === 'ANGLE_HOOK') ? ang.hook : bl.e;
+    h += '<div class="bloco-card"><span class="bloco-num">' + (b+1) + '</span><span class="bloco-t">' + bl.t + '</span>' +
+      '<div class="bloco-i">' + bl.i + '</div>' +
+      '<div class="bloco-e">Exemplo: ' + ex + '</div></div>';
+  }
+  h += '<div class="rot-nota"><b>Regra da Malu:</b> nenhum criativo nasce sozinho — grave esse roteiro e já crie 2-3 variações antes de lançar: troque só o gancho, faça uma versão mais curta, ou adicione um visual (caixinha de pergunta, texto na tela). Total: 20-45 segundos, vertical, legendado.</div>';
+  rotOut.innerHTML = h;
+  if (rotOut.scrollIntoView) rotOut.scrollIntoView(true);
+}
+renderChips();
 
 /* ================= DICIONÁRIO ================= */
 var DIC = [
@@ -259,11 +371,11 @@ function diagnostico(){
   } else if (!gastou){
     cls='v-info'; titulo='Cedo demais pra julgar';
     corpo='Esse vídeo ainda não gastou R$300. Antes disso os números oscilam demais e qualquer decisão é chute.';
-    acaoTit='O que fazer:'; acao='Nada. Deixa rodar até R$300 de gasto e volta aqui. Não mexe, não pausa, não regrava.';
+    acaoTit='O que fazer:'; acao='Nada. Deixa rodar até R$300 de gasto e volta aqui. Não mexe, não pausa, não regrava. Aproveita a espera: se esse vídeo foi lançado sozinho, grava já 2-3 variações dele (gancho diferente, versão mais curta) — regra da Malu: nenhum criativo nasce sozinho.';
   } else if (f.freq === 'bad' && (f.cpa === 'bad' || f.cpa === 'warn')){
     cls='v-warn'; titulo='Fadiga — o vídeo cansou, não fracassou';
     corpo='Frequência acima de 4 com CPA piorando: as mesmas pessoas já viram esse vídeo muitas vezes. Ele foi um campeão e está se aposentando — isso é normal e acontece com TODO vídeo bom.';
-    acaoTit='O que fazer:'; acao='Grave a substituição usando o MESMO ângulo desse campeão (a dor já provou que funciona): hook novo, roupa nova, cenário novo. É o winner mais barato que existe.';
+    acaoTit='O que fazer:'; acao='Grave a substituição usando o MESMO ângulo desse campeão (a dor já provou que funciona): hook novo, roupa nova, cenário novo. E teste variações visuais que renovam sem regravar tudo: caixinha de pergunta, texto na tela, tela dividida, versão mais curta. É o winner mais barato que existe.';
   } else if (f.hook === 'bad'){
     cls='v-bad'; titulo='Regrava os 3 primeiros segundos';
     corpo='O dedo dela não parou. O resto do vídeo nem importa ainda — ninguém chegou lá. O miolo pode estar ótimo: aproveita ele.';
@@ -275,7 +387,7 @@ function diagnostico(){
   } else if (f.ctr === 'bad'){
     cls='v-bad'; titulo='Fortalece o final do vídeo';
     corpo='Ela assistiu, gostou... e não clicou. O vídeo entretém mas não vende: falta mostrar o produto como A solução, e falta um convite direto.';
-    acaoTit='O que fazer:'; acao='Refaça o final: produto na tela, resultado claro, e UM convite simples ("toca no link e conhece"). Se tiver oferta (Kit 2 mais vendido), fala dela. O miolo e o hook ficam como estão.';
+    acaoTit='O que fazer:'; acao='Refaça o final: produto na tela, resultado claro, e UM convite simples ("toca no link e conhece"). E teste mudar a OFERTA do CTA (kit 2 mais vendido, presente surpresa) — pra resultado ruim, trocar gancho e oferta são as variações nº1. O miolo e o hook ficam como estão.';
   } else if (f.cpa === 'bad' && funilVerde){
     cls='v-info'; titulo='NÃO é culpa do seu vídeo!';
     corpo='Hook, retenção e clique estão bons — o vídeo está aprovado. Se a venda está cara, o problema é oferta, página ou público. Regravar não resolve nada.';
@@ -293,7 +405,7 @@ function diagnostico(){
   } else {
     cls='v-ok'; titulo='WINNER — não toca nele!';
     corpo='Todos os sinais preenchidos estão verdes. Esse vídeo está vendendo — mexer agora só atrapalha.';
-    acaoTit='O que fazer:'; acao='1) Avisa o Pedro pra promover pra campanha de campeões. 2) Grava VARIAÇÕES dele: mesmo ângulo, hooks e cenários novos — é assim que se multiplica um winner antes da fadiga chegar.';
+    acaoTit='Playbook de multiplicação:'; acao='1) Avisa o Pedro pra promover pra campanha de campeões. 2) Mesma copy com OUTRAS creators do Studio (copy validada + rosto novo = winner novo). 3) Outros formatos: versão curta, estático com a frase do hook, carrossel. 4) Se tiver data especial chegando (Black Friday), versão com banner. Multiplica ANTES da fadiga chegar.';
   }
 
   var mapCls = {ok:'p-ok', warn:'p-warn', bad:'p-bad', off:'p-off'};
