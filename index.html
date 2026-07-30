@@ -10,7 +10,10 @@
   .wrap{max-width:680px; margin:0 auto;}
   .brand{color:#9C6644; font-weight:700; letter-spacing:2px; font-size:12px; text-align:center;}
   h1{color:#1B4332; text-align:center; font-size:28px; margin:6px 0 4px;}
-  .sub{text-align:center; color:#6b7a71; font-size:15px; margin-bottom:24px;}
+  .sub{text-align:center; color:#6b7a71; font-size:15px; margin-bottom:18px;}
+  .tabs{display:-webkit-flex; display:flex; background:#e7eee9; border-radius:14px; padding:5px; margin-bottom:20px;}
+  .tab{-webkit-flex:1; flex:1; text-align:center; padding:13px 8px; border-radius:10px; font-weight:800; font-size:16px; color:#4a5a50; cursor:pointer; border:none; background:transparent; -webkit-appearance:none;}
+  .tab.ativa{background:#1B4332; color:#fff;}
   .card{background:#fff; border:1px solid #dfe8e2; border-radius:16px; padding:20px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,.05);}
   .step{margin-bottom:14px; font-weight:700; font-size:17px; color:#1B4332;}
   .field{display:-webkit-flex; display:flex; -webkit-align-items:center; align-items:center; padding:12px 10px; border-radius:12px; margin-bottom:8px; background:#fafcfa; border:1px solid #dfe8e2;}
@@ -22,8 +25,8 @@
   .unit{width:28px; color:#6b7a71; font-weight:700; text-align:center;}
   .gasto{padding:12px 10px; font-size:15.5px;}
   .gasto input{width:20px; height:20px; vertical-align:middle; margin-right:8px;}
-  button{width:100%; background:#1B4332; color:#fff; border:none; border-radius:14px; padding:18px; font-size:20px; font-weight:800; cursor:pointer; letter-spacing:.5px; -webkit-appearance:none;}
-  button:active{background:#2D6A4F;}
+  .btnp{display:block; width:100%; background:#1B4332; color:#fff; border:none; border-radius:14px; padding:18px; font-size:20px; font-weight:800; cursor:pointer; letter-spacing:.5px; -webkit-appearance:none;}
+  .btnp:active{background:#2D6A4F;}
   #resultado{display:none; margin-top:16px;}
   .verdict{border-radius:16px; padding:22px; border:2px solid; margin-bottom:12px;}
   .verdict h2{font-size:22px; margin-bottom:8px;}
@@ -42,52 +45,180 @@
   .p-bad{background:#fbe3e0; color:#b3372f; border-color:#b3372f;}
   .p-off{background:#f0f0f0; color:#999; border-color:#ddd;}
   .foot{text-align:center; color:#6b7a71; font-size:12.5px; margin-top:20px; line-height:1.5;}
+  /* Dicionário */
+  #view-dic{display:none;}
+  .dic-item{background:#fff; border:1px solid #dfe8e2; border-radius:16px; margin-bottom:10px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .dic-btn{display:block; width:100%; text-align:left; background:#fff; border:none; padding:16px 18px; cursor:pointer; -webkit-appearance:none;}
+  .dic-btn .dt{font-weight:800; font-size:17px; color:#1B4332;}
+  .dic-btn .dq{font-size:13.5px; color:#6b7a71; margin-top:2px;}
+  .dic-btn .seta{float:right; color:#9C6644; font-weight:800; font-size:18px; margin-top:6px;}
+  .dic-body{display:none; padding:0 18px 18px;}
+  .dic-body p{font-size:15.5px; line-height:1.55; margin-bottom:10px;}
+  .dic-body .rot{font-weight:800; color:#2D6A4F; display:block; margin-bottom:2px; font-size:13px; letter-spacing:.5px; text-transform:uppercase;}
+  .faixas{display:-webkit-flex; display:flex; -webkit-flex-wrap:wrap; flex-wrap:wrap; margin:0 -3px 10px;}
+  .faixa{-webkit-flex:1; flex:1; min-width:88px; margin:3px; text-align:center; border-radius:10px; padding:9px 4px; font-weight:800; font-size:14px; border:1.5px solid;}
+  .faixa small{display:block; font-weight:600; font-size:11px; margin-top:1px;}
+  .mudar{background:#FBF3E6; border:1.5px solid #9C6644; border-radius:10px; padding:12px; font-size:15.5px; line-height:1.5;}
+  .mudar b{color:#9C6644;}
+  .regra{background:#1B4332; color:#fff; border-radius:16px; padding:18px; margin-bottom:14px;}
+  .regra h3{font-size:17px; margin-bottom:6px;}
+  .regra p{font-size:15px; line-height:1.5; color:#dfe8e2;}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="brand">L'AMAZONIE SKINCARE</div>
   <h1>Semáforo de Criativo</h1>
-  <div class="sub">Digite os números do vídeo. Eu te digo <b>o que fazer</b> — em uma frase.</div>
+  <div class="sub">A central da Haniele pra ler os números do Facebook Ads.</div>
 
-  <div class="card">
-    <div class="step">1. Digite o que você tem (pode deixar em branco o que não souber)</div>
-
-    <div class="field">
-      <label><div class="fname">Hook Rate</div><div class="fhint">Reproduções de 3 seg ÷ Impressões. Ela parou o dedo?</div></label>
-      <input type="text" inputmode="decimal" id="hook" placeholder="ex: 28"><span class="unit">%</span>
-    </div>
-    <div class="field">
-      <label><div class="fname">Hold Rate</div><div class="fhint">ThruPlays ÷ Impressões. Ela ficou até o fim?</div></label>
-      <input type="text" inputmode="decimal" id="hold" placeholder="ex: 9"><span class="unit">%</span>
-    </div>
-    <div class="field">
-      <label><div class="fname">CTR (link)</div><div class="fhint">Taxa de cliques no link. Ela quis conhecer?</div></label>
-      <input type="text" inputmode="decimal" id="ctr" placeholder="ex: 1,2"><span class="unit">%</span>
-    </div>
-    <div class="field">
-      <label><div class="fname">CPA — custo por compra</div><div class="fhint">Quanto custou cada venda desse vídeo</div></label>
-      <input type="text" inputmode="decimal" id="cpa" placeholder="ex: 78"><span class="unit">R$</span>
-    </div>
-    <div class="field">
-      <label><div class="fname">Frequência</div><div class="fhint">Só pra vídeo antigo/campeão. Quantas vezes a mesma pessoa viu</div></label>
-      <input type="text" inputmode="decimal" id="freq" placeholder="ex: 3,5"><span class="unit">&nbsp;</span>
-    </div>
-    <div class="gasto">
-      <input type="checkbox" id="gastou" checked>
-      <label for="gastou">Esse vídeo já gastou <b>R$300 ou mais</b></label>
-    </div>
+  <div class="tabs">
+    <button type="button" class="tab ativa" id="tab-sem">🚦 Semáforo</button>
+    <button type="button" class="tab" id="tab-dic">📖 Dicionário</button>
   </div>
 
-  <button type="button" id="btn">ME DIZ O QUE FAZER →</button>
+  <!-- ===== VIEW SEMÁFORO ===== -->
+  <div id="view-sem">
+    <div class="card">
+      <div class="step">1. Digite o que você tem (pode deixar em branco o que não souber)</div>
+      <div class="field">
+        <label><div class="fname">Hook Rate</div><div class="fhint">Reproduções de 3 seg ÷ Impressões. Ela parou o dedo?</div></label>
+        <input type="text" inputmode="decimal" id="hook" placeholder="ex: 28"><span class="unit">%</span>
+      </div>
+      <div class="field">
+        <label><div class="fname">Hold Rate</div><div class="fhint">ThruPlays ÷ Impressões. Ela ficou até o fim?</div></label>
+        <input type="text" inputmode="decimal" id="hold" placeholder="ex: 9"><span class="unit">%</span>
+      </div>
+      <div class="field">
+        <label><div class="fname">CTR (link)</div><div class="fhint">Taxa de cliques no link. Ela quis conhecer?</div></label>
+        <input type="text" inputmode="decimal" id="ctr" placeholder="ex: 1,2"><span class="unit">%</span>
+      </div>
+      <div class="field">
+        <label><div class="fname">CPA — custo por compra</div><div class="fhint">Quanto custou cada venda desse vídeo</div></label>
+        <input type="text" inputmode="decimal" id="cpa" placeholder="ex: 78"><span class="unit">R$</span>
+      </div>
+      <div class="field">
+        <label><div class="fname">Frequência</div><div class="fhint">Só pra vídeo antigo/campeão. Quantas vezes a mesma pessoa viu</div></label>
+        <input type="text" inputmode="decimal" id="freq" placeholder="ex: 3,5"><span class="unit">&nbsp;</span>
+      </div>
+      <div class="gasto">
+        <input type="checkbox" id="gastou" checked>
+        <label for="gastou">Esse vídeo já gastou <b>R$300 ou mais</b></label>
+      </div>
+    </div>
+    <button type="button" class="btnp" id="btn">ME DIZ O QUE FAZER →</button>
+    <div id="resultado"></div>
+  </div>
 
-  <div id="resultado"></div>
+  <!-- ===== VIEW DICIONÁRIO ===== -->
+  <div id="view-dic">
+    <div class="regra">
+      <h3>A REGRA DE OURO</h3>
+      <p>As métricas formam uma fila, na ordem em que a cliente vive o vídeo: <b>Hook → Retenção → Clique → Compra</b>. Conserte sempre o PRIMEIRO número ruim da fila e ignore os de trás. Não adianta arrumar o final do vídeo se ninguém passa dos 3 primeiros segundos.</p>
+    </div>
+    <div class="sub" style="margin-bottom:12px;">Toca em cada métrica pra abrir a explicação:</div>
+    <div id="dic-lista"></div>
+    <div class="foot">Faixas calibradas com benchmarks de beauty DTC Brasil + a conta da L'Amazonie (jul/2026 · AOV R$209 · ROAS alvo 2,45x). O Pedro atualiza quando a meta mudar.</div>
+  </div>
 
-  <div class="foot">Referências: beauty DTC Brasil + conta L'Amazonie (jul/2026 · AOV R$209 · ROAS alvo 2,45x).<br>
+  <div class="foot" id="foot-sem">Referências: beauty DTC Brasil + conta L'Amazonie (jul/2026 · AOV R$209 · ROAS alvo 2,45x).<br>
   Regra da casa: conserta o PRIMEIRO sinal vermelho da fila — Hook → Retenção → Clique → Compra.</div>
 </div>
 
 <script>
+(function(){
+/* ================= NAVEGAÇÃO ================= */
+var tabSem = document.getElementById('tab-sem');
+var tabDic = document.getElementById('tab-dic');
+var viewSem = document.getElementById('view-sem');
+var viewDic = document.getElementById('view-dic');
+var footSem = document.getElementById('foot-sem');
+function mostraSem(){ tabSem.className='tab ativa'; tabDic.className='tab'; viewSem.style.display='block'; viewDic.style.display='none'; footSem.style.display='block'; }
+function mostraDic(){ tabDic.className='tab ativa'; tabSem.className='tab'; viewDic.style.display='block'; viewSem.style.display='none'; footSem.style.display='none'; }
+tabSem.onclick = mostraSem;
+tabDic.onclick = mostraDic;
+
+/* ================= DICIONÁRIO ================= */
+var DIC = [
+  { nome:'Hook Rate', pergunta:'Ela parou o dedo nos 3 primeiros segundos?',
+    oque:'De todas as pessoas que o vídeo alcançou, quantas assistiram os 3 primeiros segundos. É a métrica número 1 de criativo: mede se a sua primeira frase parou o scroll.',
+    onde:'Gerenciador de Anúncios: coluna "Reproduções de 3 segundos" dividida por "Impressões" (o Pedro/Daniel deixam essa coluna pronta pra você).',
+    faixas:[['ÓTIMO','acima de 35%','ok'],['BOM','25% a 35%','warn'],['RUIM','abaixo de 25%','bad']],
+    culpado:'Os 3 primeiros segundos: a primeira frase, a primeira imagem, o texto na tela.',
+    mudar:'Regrave SÓ o começo com outra fórmula de hook (confissão, pergunta-espelho, "não faça isso"...). Primeira palavra já forte, zero respiro antes dela. Dica de ouro: grave 3 hooks diferentes pro mesmo miolo — custa 5 minutos e triplica a chance de winner.' },
+  { nome:'Hold Rate', pergunta:'Ela ficou assistindo até o fim?',
+    oque:'Quantas pessoas alcançadas assistiram até o vídeo contar como "completo" pro Meta (ThruPlay: 15 segundos ou o vídeo inteiro). Mede se o miolo segura a promessa que o hook fez.',
+    onde:'Gerenciador: coluna "ThruPlays" dividida por "Impressões".',
+    faixas:[['ÓTIMO','acima de 12%','ok'],['BOM','8% a 12%','warn'],['RUIM','abaixo de 8%','bad']],
+    culpado:'O miolo: ritmo lento, enrolação, promessa do hook que demora a ser paga.',
+    mudar:'Corte sem dó todo segundo que não avança a história. Entregue a promessa do hook ANTES da metade. Troque enquadramento/cenário a cada 3-5 segundos. Mire 20-30 segundos no total.' },
+  { nome:'CTR (link)', pergunta:'Ela clicou pra conhecer o produto?',
+    oque:'De quem viu o anúncio, quantas clicaram no link pra ir pra página. Mede se o vídeo construiu desejo suficiente.',
+    onde:'Gerenciador: coluna "CTR (taxa de cliques no link)".',
+    faixas:[['ÓTIMO','acima de 1,5%','ok'],['BOM','1,0% a 1,5%','warn'],['RUIM','abaixo de 1,0%','bad']],
+    culpado:'O final do vídeo: convite fraco, ou desejo que não foi construído no miolo.',
+    mudar:'Refaça o final: produto na tela, resultado claro, e UM convite direto ("toca no link e conhece"). Se hook e retenção estão ótimos e o CTR ruim, o vídeo entretém mas não vende — falta mostrar o produto como A solução da dor.' },
+  { nome:'CPA — custo por compra', pergunta:'Quanto custou cada venda desse vídeo?',
+    oque:'Quanto foi gasto em anúncio pra gerar cada venda. É a métrica que decide se o criativo vira campeão ou morre.',
+    onde:'Gerenciador: "Custo por compra". O número oficial da empresa sai do Solomon.',
+    faixas:[['ÓTIMO','abaixo de R$70','ok'],['BOM','R$70 a R$85','warn'],['RUIM','acima de R$85','bad']],
+    culpado:'ATENÇÃO: se Hook, Retenção e Clique estão verdes e o CPA está ruim, o problema NÃO é o seu vídeo — é oferta, página ou público. Não regrave.',
+    mudar:'Funil verde + CPA ruim: avisa o Pedro/Daniel e parte pro próximo brief. Funil com vermelho: conserta o primeiro sensor da fila. Regra da conta: gastou R$300 sem venda = morre; CPA até R$85 = promove pra campanha de campeões.' },
+  { nome:'ROAS — retorno sobre gasto', pergunta:'Quantos reais voltam pra cada R$1 investido?',
+    oque:'O placar do jogo: receita gerada dividida pelo gasto em anúncio. Por criativo ele oscila muito — use como confirmação do CPA, não como sensor de vídeo.',
+    onde:'Solomon (fonte oficial) ou Gerenciador por criativo.',
+    faixas:[['ÓTIMO','acima de 3,0x','ok'],['BOM','2,45x a 3,0x','warn'],['RUIM','abaixo de 2,45x','bad']],
+    culpado:'Nada específico do vídeo — ROAS resume tudo junto: criativo + oferta + página + público. Abaixo de 2,45x a empresa não bate a meta de margem.',
+    mudar:'Ninguém regrava vídeo por ROAS. Use assim: ROAS ótimo = criativo intocável, grave VARIAÇÕES dele. ROAS caindo semana a semana em vídeo antigo = fadiga chegando (confere a Frequência).' },
+  { nome:'Frequência', pergunta:'Quantas vezes a mesma pessoa já viu?',
+    oque:'Média de vezes que a mesma pessoa viu o anúncio no período. É o termômetro de fadiga dos campeões — não serve pra criativo novo.',
+    onde:'Gerenciador: coluna "Frequência" (olhando janela de 30 dias).',
+    faixas:[['ÓTIMO','abaixo de 2,5','ok'],['BOM','2,5 a 4,0','warn'],['RUIM','acima de 4,0','bad']],
+    culpado:'Nada — é sinal de tempo de vida. Frequência alta + CPA subindo = o vídeo cansou (fadiga), não que ficou ruim.',
+    mudar:'Grave a substituição ANTES do campeão morrer: mesmo ângulo (a dor já provou que funciona), hook novo, roupa e cenário novos. É o winner mais barato que existe.' },
+  { nome:'CPM — custo por mil', pergunta:'Quanto custa o "aluguel" do feed?',
+    oque:'Quanto o Meta cobra pra mostrar o anúncio mil vezes. Sobe e desce com concorrência e época do ano — mas criativo ruim TAMBÉM encarece: o Meta cobra mais caro pra entregar vídeo que ninguém quer ver.',
+    onde:'Gerenciador: coluna "CPM".',
+    faixas:[['ÓTIMO','abaixo de R$30','ok'],['BOM','R$30 a R$50','warn'],['RUIM','acima de R$50 direto','bad']],
+    culpado:'Metade época/concorrência (não é sua culpa), metade qualidade do criativo (é seu sinal).',
+    mudar:'CPM alto num vídeo só (e normal nos outros) = o Meta está punindo esse vídeo; o funil dele provavelmente está vermelho — conserta pela fila. CPM alto na conta inteira = mercado/época; avisa o Daniel e segue o jogo.' }
+];
+
+var lista = document.getElementById('dic-lista');
+var html = '';
+for (var d = 0; d < DIC.length; d++){
+  var it = DIC[d];
+  var fx = '';
+  var mapF = {ok:'p-ok', warn:'p-warn', bad:'p-bad'};
+  for (var x = 0; x < it.faixas.length; x++){
+    fx += '<div class="faixa ' + mapF[it.faixas[x][2]] + '">' + it.faixas[x][0] + '<small>' + it.faixas[x][1] + '</small></div>';
+  }
+  html += '<div class="dic-item">' +
+    '<button type="button" class="dic-btn" data-i="' + d + '"><span class="seta" id="seta-' + d + '">+</span>' +
+    '<span class="dt">' + it.nome + '</span><span class="dq" style="display:block;">' + it.pergunta + '</span></button>' +
+    '<div class="dic-body" id="dic-body-' + d + '">' +
+    '<p><span class="rot">O que é</span>' + it.oque + '</p>' +
+    '<p><span class="rot">Onde ver</span>' + it.onde + '</p>' +
+    '<span class="rot">As faixas</span><div class="faixas">' + fx + '</div>' +
+    '<p><span class="rot">Se está ruim, o culpado é</span>' + it.culpado + '</p>' +
+    '<div class="mudar"><b>O que você muda no vídeo:</b> ' + it.mudar + '</div>' +
+    '</div></div>';
+}
+lista.innerHTML = html;
+
+function toggleDic(i){
+  for (var d = 0; d < DIC.length; d++){
+    var body = document.getElementById('dic-body-' + d);
+    var seta = document.getElementById('seta-' + d);
+    if (d === i && body.style.display !== 'block'){ body.style.display = 'block'; seta.innerHTML = '−'; }
+    else { body.style.display = 'none'; seta.innerHTML = '+'; }
+  }
+}
+var btns = lista.getElementsByClassName('dic-btn');
+for (var b = 0; b < btns.length; b++){
+  (function(btn){ btn.onclick = function(){ toggleDic(parseInt(btn.getAttribute('data-i'), 10)); }; })(btns[b]);
+}
+
+/* ================= SEMÁFORO ================= */
 function num(id){
   var v = document.getElementById(id).value;
   if (v === null || v === '') return null;
@@ -95,20 +226,17 @@ function num(id){
   var n = parseFloat(v);
   return isNaN(n) ? null : n;
 }
-
 function faixa(v, otimo, bom, inverso){
   if (v === null) return 'off';
   if (!inverso){ if (v >= otimo) return 'ok'; if (v >= bom) return 'warn'; return 'bad'; }
   else { if (v <= otimo) return 'ok'; if (v <= bom) return 'warn'; return 'bad'; }
 }
-
 var NOMES = {hook:'Hook', hold:'Retenção', ctr:'Clique', cpa:'CPA', freq:'Frequência'};
-var FAIXAS_TXT = {hook:'>35% · 25-35% · <25%', hold:'>12% · 8-12% · <8%', ctr:'>1,5% · 1-1,5% · <1%', cpa:'<R$70 · 70-85 · >R$85', freq:'<2,5 · 2,5-4 · >4'};
+var FAIXAS_TXT = {hook:'&gt;35% · 25-35% · &lt;25%', hold:'&gt;12% · 8-12% · &lt;8%', ctr:'&gt;1,5% · 1-1,5% · &lt;1%', cpa:'&lt;R$70 · 70-85 · &gt;R$85', freq:'&lt;2,5 · 2,5-4 · &gt;4'};
 
 function diagnostico(){
   var hook = num('hook'), hold = num('hold'), ctr = num('ctr'), cpa = num('cpa'), freq = num('freq');
   var gastou = document.getElementById('gastou').checked;
-
   var f = {
     hook: faixa(hook, 35, 25, false),
     hold: faixa(hold, 12, 8, false),
@@ -116,71 +244,56 @@ function diagnostico(){
     cpa:  faixa(cpa, 70, 85, true),
     freq: faixa(freq, 2.5, 4.0, true)
   };
-
   var cls, titulo, corpo, acaoTit = '', acao = '';
-
   var funilVerde = true;
   var ks = ['hook','hold','ctr'];
-  for (var i = 0; i < ks.length; i++){
-    if (f[ks[i]] !== 'ok' && f[ks[i]] !== 'off') funilVerde = false;
-  }
+  for (var i = 0; i < ks.length; i++){ if (f[ks[i]] !== 'ok' && f[ks[i]] !== 'off') funilVerde = false; }
   var algumPreenchido = (hook !== null || hold !== null || ctr !== null || cpa !== null || freq !== null);
-
   var temAmarelo = false, primeiroAmarelo = null;
   var ordem = ['hook','hold','ctr','cpa'];
-  for (var j = 0; j < ordem.length; j++){
-    if (f[ordem[j]] === 'warn'){ temAmarelo = true; if (primeiroAmarelo === null) primeiroAmarelo = ordem[j]; }
-  }
+  for (var j = 0; j < ordem.length; j++){ if (f[ordem[j]] === 'warn'){ temAmarelo = true; if (primeiroAmarelo === null) primeiroAmarelo = ordem[j]; } }
 
   if (!algumPreenchido){
-    cls = 'v-info'; titulo = 'Digite pelo menos um número';
-    corpo = 'Preencha o que você tiver — mesmo só o Hook Rate já dá diagnóstico. Pode usar vírgula ou ponto (1,2 ou 1.2).';
-  }
-  else if (!gastou){
-    cls = 'v-info'; titulo = 'Cedo demais pra julgar';
-    corpo = 'Esse vídeo ainda não gastou R$300. Antes disso os números oscilam demais e qualquer decisão é chute.';
-    acaoTit = 'O que fazer:'; acao = 'Nada. Deixa rodar até R$300 de gasto e volta aqui. Não mexe, não pausa, não regrava.';
-  }
-  else if (f.freq === 'bad' && (f.cpa === 'bad' || f.cpa === 'warn')){
-    cls = 'v-warn'; titulo = 'Fadiga — o vídeo cansou, não fracassou';
-    corpo = 'Frequência acima de 4 com CPA piorando: as mesmas pessoas já viram esse vídeo muitas vezes. Ele foi um campeão e está se aposentando — isso é normal e acontece com TODO vídeo bom.';
-    acaoTit = 'O que fazer:'; acao = 'Grave a substituição usando o MESMO ângulo desse campeão (a dor já provou que funciona): hook novo, roupa nova, cenário novo. É o winner mais barato que existe.';
-  }
-  else if (f.hook === 'bad'){
-    cls = 'v-bad'; titulo = 'Regrava os 3 primeiros segundos';
-    corpo = 'O dedo dela não parou. O resto do vídeo nem importa ainda — ninguém chegou lá. O miolo pode estar ótimo: aproveita ele.';
-    acaoTit = 'O que fazer:'; acao = 'Regrave SÓ o começo com OUTRA fórmula de hook (se era confissão, tenta pergunta-espelho ou "não faça isso"). Primeira palavra já forte, zero respiro antes dela. Dica de ouro: grava 3 hooks diferentes pro mesmo miolo.';
-  }
-  else if (f.hold === 'bad'){
-    cls = 'v-bad'; titulo = 'Encurta o miolo';
-    corpo = 'O hook prendeu, mas ela foi embora no meio. O vídeo está comprido ou demora a entregar o que o hook prometeu.';
-    acaoTit = 'O que fazer:'; acao = 'Corte todo segundo que não avança a história. Entregue a promessa do hook ANTES da metade. Troque enquadramento a cada 3-5 segundos. Mire 20-30 segundos no total.';
-  }
-  else if (f.ctr === 'bad'){
-    cls = 'v-bad'; titulo = 'Fortalece o final do vídeo';
-    corpo = 'Ela assistiu, gostou... e não clicou. O vídeo entretém mas não vende: falta mostrar o produto como A solução, e falta um convite direto.';
-    acaoTit = 'O que fazer:'; acao = 'Refaça o final: produto na tela, resultado claro, e UM convite simples ("toca no link e conhece"). Se tiver oferta (Kit 2 mais vendido), fala dela. O miolo e o hook ficam como estão.';
-  }
-  else if (f.cpa === 'bad' && funilVerde){
-    cls = 'v-info'; titulo = 'NÃO é culpa do seu vídeo!';
-    corpo = 'Hook, retenção e clique estão bons — o vídeo está aprovado. Se a venda está cara, o problema é oferta, página ou público. Regravar não resolve nada.';
-    acaoTit = 'O que fazer:'; acao = 'Nada no vídeo. Manda mensagem pro Pedro/Daniel: "funil verde, CPA alto — problema é de mídia/página". E parte pro próximo brief.';
-  }
-  else if (temAmarelo){
+    cls='v-info'; titulo='Digite pelo menos um número';
+    corpo='Preencha o que você tiver — mesmo só o Hook Rate já dá diagnóstico. Pode usar vírgula ou ponto (1,2 ou 1.2).';
+  } else if (!gastou){
+    cls='v-info'; titulo='Cedo demais pra julgar';
+    corpo='Esse vídeo ainda não gastou R$300. Antes disso os números oscilam demais e qualquer decisão é chute.';
+    acaoTit='O que fazer:'; acao='Nada. Deixa rodar até R$300 de gasto e volta aqui. Não mexe, não pausa, não regrava.';
+  } else if (f.freq === 'bad' && (f.cpa === 'bad' || f.cpa === 'warn')){
+    cls='v-warn'; titulo='Fadiga — o vídeo cansou, não fracassou';
+    corpo='Frequência acima de 4 com CPA piorando: as mesmas pessoas já viram esse vídeo muitas vezes. Ele foi um campeão e está se aposentando — isso é normal e acontece com TODO vídeo bom.';
+    acaoTit='O que fazer:'; acao='Grave a substituição usando o MESMO ângulo desse campeão (a dor já provou que funciona): hook novo, roupa nova, cenário novo. É o winner mais barato que existe.';
+  } else if (f.hook === 'bad'){
+    cls='v-bad'; titulo='Regrava os 3 primeiros segundos';
+    corpo='O dedo dela não parou. O resto do vídeo nem importa ainda — ninguém chegou lá. O miolo pode estar ótimo: aproveita ele.';
+    acaoTit='O que fazer:'; acao='Regrave SÓ o começo com OUTRA fórmula de hook (se era confissão, tenta pergunta-espelho ou "não faça isso"). Primeira palavra já forte, zero respiro antes dela. Dica de ouro: grava 3 hooks diferentes pro mesmo miolo.';
+  } else if (f.hold === 'bad'){
+    cls='v-bad'; titulo='Encurta o miolo';
+    corpo='O hook prendeu, mas ela foi embora no meio. O vídeo está comprido ou demora a entregar o que o hook prometeu.';
+    acaoTit='O que fazer:'; acao='Corte todo segundo que não avança a história. Entregue a promessa do hook ANTES da metade. Troque enquadramento a cada 3-5 segundos. Mire 20-30 segundos no total.';
+  } else if (f.ctr === 'bad'){
+    cls='v-bad'; titulo='Fortalece o final do vídeo';
+    corpo='Ela assistiu, gostou... e não clicou. O vídeo entretém mas não vende: falta mostrar o produto como A solução, e falta um convite direto.';
+    acaoTit='O que fazer:'; acao='Refaça o final: produto na tela, resultado claro, e UM convite simples ("toca no link e conhece"). Se tiver oferta (Kit 2 mais vendido), fala dela. O miolo e o hook ficam como estão.';
+  } else if (f.cpa === 'bad' && funilVerde){
+    cls='v-info'; titulo='NÃO é culpa do seu vídeo!';
+    corpo='Hook, retenção e clique estão bons — o vídeo está aprovado. Se a venda está cara, o problema é oferta, página ou público. Regravar não resolve nada.';
+    acaoTit='O que fazer:'; acao='Nada no vídeo. Manda mensagem pro Pedro/Daniel: "funil verde, CPA alto — problema é de mídia/página". E parte pro próximo brief.';
+  } else if (temAmarelo){
     var dicas = {
-      hook: 'Teste 2 hooks novos pro mesmo miolo — dá pra subir de bom pra ótimo.',
-      hold: 'Aperte o ritmo: corte 3-5 segundos do miolo e entregue a promessa mais cedo.',
-      ctr: 'Deixe o convite final mais direto e o produto mais visível.',
-      cpa: 'Está no limite do aceitável (R$70-85). Segura como está e observa por 3-4 dias: melhorou, promove; piorou, volta aqui.'
+      hook:'Teste 2 hooks novos pro mesmo miolo — dá pra subir de bom pra ótimo.',
+      hold:'Aperte o ritmo: corte 3-5 segundos do miolo e entregue a promessa mais cedo.',
+      ctr:'Deixe o convite final mais direto e o produto mais visível.',
+      cpa:'Está no limite do aceitável (R$70-85). Segura como está e observa por 3-4 dias: melhorou, promove; piorou, volta aqui.'
     };
-    cls = 'v-warn'; titulo = 'Bom — dá pra ficar ótimo';
-    corpo = 'Nenhum sinal vermelho, mas o "' + NOMES[primeiroAmarelo] + '" está na faixa amarela. Vale um ajuste fino, sem regravar tudo.';
-    acaoTit = 'O que fazer:'; acao = dicas[primeiroAmarelo];
-  }
-  else {
-    cls = 'v-ok'; titulo = 'WINNER — não toca nele!';
-    corpo = 'Todos os sinais preenchidos estão verdes. Esse vídeo está vendendo — mexer agora só atrapalha.';
-    acaoTit = 'O que fazer:'; acao = '1) Avisa o Pedro pra promover pra campanha de campeões. 2) Grava VARIAÇÕES dele: mesmo ângulo, hooks e cenários novos — é assim que se multiplica um winner antes da fadiga chegar.';
+    cls='v-warn'; titulo='Bom — dá pra ficar ótimo';
+    corpo='Nenhum sinal vermelho, mas o "' + NOMES[primeiroAmarelo] + '" está na faixa amarela. Vale um ajuste fino, sem regravar tudo.';
+    acaoTit='O que fazer:'; acao=dicas[primeiroAmarelo];
+  } else {
+    cls='v-ok'; titulo='WINNER — não toca nele!';
+    corpo='Todos os sinais preenchidos estão verdes. Esse vídeo está vendendo — mexer agora só atrapalha.';
+    acaoTit='O que fazer:'; acao='1) Avisa o Pedro pra promover pra campanha de campeões. 2) Grava VARIAÇÕES dele: mesmo ângulo, hooks e cenários novos — é assim que se multiplica um winner antes da fadiga chegar.';
   }
 
   var mapCls = {ok:'p-ok', warn:'p-warn', bad:'p-bad', off:'p-off'};
@@ -191,19 +304,15 @@ function diagnostico(){
     var k = todas[m];
     pills += '<div class="pill ' + mapCls[f[k]] + '">' + NOMES[k] + ': ' + mapLab[f[k]] + '<small>' + FAIXAS_TXT[k] + '</small></div>';
   }
-
   var r = document.getElementById('resultado');
-  r.innerHTML =
-    '<div class="card"><div class="semaforo">' + pills + '</div></div>' +
-    '<div class="verdict ' + cls + '"><h2>' + titulo + '</h2>' +
-    '<p>' + corpo + '</p>' +
-    (acao ? '<div class="acao"><b>' + acaoTit + '</b>' + acao + '</div>' : '') +
-    '</div>';
+  r.innerHTML = '<div class="card"><div class="semaforo">' + pills + '</div></div>' +
+    '<div class="verdict ' + cls + '"><h2>' + titulo + '</h2><p>' + corpo + '</p>' +
+    (acao ? '<div class="acao"><b>' + acaoTit + '</b>' + acao + '</div>' : '') + '</div>';
   r.style.display = 'block';
   if (r.scrollIntoView) r.scrollIntoView(true);
 }
-
 document.getElementById('btn').onclick = diagnostico;
+})();
 </script>
 </body>
 </html>
