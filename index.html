@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semáforo de Criativo — L'Amazonie</title>
+<style>
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:-apple-system, 'Segoe UI', Arial, sans-serif; background:#f6f8f6; color:#25302a; padding:24px 16px 60px;}
+  .wrap{max-width:680px; margin:0 auto;}
+  .brand{color:#9C6644; font-weight:700; letter-spacing:2px; font-size:12px; text-align:center;}
+  h1{color:#1B4332; text-align:center; font-size:28px; margin:6px 0 4px;}
+  .sub{text-align:center; color:#6b7a71; font-size:15px; margin-bottom:24px;}
+  .card{background:#fff; border:1px solid #dfe8e2; border-radius:16px; padding:20px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .step{margin-bottom:14px; font-weight:700; font-size:17px; color:#1B4332;}
+  .field{display:-webkit-flex; display:flex; -webkit-align-items:center; align-items:center; padding:12px 10px; border-radius:12px; margin-bottom:8px; background:#fafcfa; border:1px solid #dfe8e2;}
+  .field label{-webkit-flex:1; flex:1; padding-right:10px;}
+  .fname{font-weight:700; font-size:16px;}
+  .fhint{font-size:12.5px; color:#6b7a71; margin-top:2px;}
+  .field input{width:100px; font-size:20px; padding:10px; border:2px solid #dfe8e2; border-radius:10px; text-align:center; font-weight:700; color:#25302a;}
+  .field input:focus{outline:none; border-color:#2D6A4F;}
+  .unit{width:28px; color:#6b7a71; font-weight:700; text-align:center;}
+  .gasto{padding:12px 10px; font-size:15.5px;}
+  .gasto input{width:20px; height:20px; vertical-align:middle; margin-right:8px;}
+  button{width:100%; background:#1B4332; color:#fff; border:none; border-radius:14px; padding:18px; font-size:20px; font-weight:800; cursor:pointer; letter-spacing:.5px; -webkit-appearance:none;}
+  button:active{background:#2D6A4F;}
+  #resultado{display:none; margin-top:16px;}
+  .verdict{border-radius:16px; padding:22px; border:2px solid; margin-bottom:12px;}
+  .verdict h2{font-size:22px; margin-bottom:8px;}
+  .verdict p{font-size:16.5px; line-height:1.5;}
+  .verdict .acao{margin-top:12px; padding:14px; background:rgba(255,255,255,.65); border-radius:10px; font-size:16.5px; line-height:1.55;}
+  .acao b{display:block; margin-bottom:4px;}
+  .v-ok{background:#e3f4e7; border-color:#2e7d46;} .v-ok h2{color:#2e7d46;}
+  .v-warn{background:#fdf3d5; border-color:#b8860b;} .v-warn h2{color:#b8860b;}
+  .v-bad{background:#fbe3e0; border-color:#b3372f;} .v-bad h2{color:#b3372f;}
+  .v-info{background:#FBF3E6; border-color:#9C6644;} .v-info h2{color:#9C6644;}
+  .semaforo{display:-webkit-flex; display:flex; -webkit-flex-wrap:wrap; flex-wrap:wrap; margin:0 -4px 4px;}
+  .pill{-webkit-flex:1; flex:1; min-width:100px; margin:4px; text-align:center; border-radius:12px; padding:10px 6px; font-weight:700; font-size:14px; border:1.5px solid;}
+  .pill small{display:block; font-weight:400; font-size:11.5px; margin-top:2px;}
+  .p-ok{background:#e3f4e7; color:#2e7d46; border-color:#2e7d46;}
+  .p-warn{background:#fdf3d5; color:#b8860b; border-color:#b8860b;}
+  .p-bad{background:#fbe3e0; color:#b3372f; border-color:#b3372f;}
+  .p-off{background:#f0f0f0; color:#999; border-color:#ddd;}
+  .foot{text-align:center; color:#6b7a71; font-size:12.5px; margin-top:20px; line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">L'AMAZONIE SKINCARE</div>
+  <h1>Semáforo de Criativo</h1>
+  <div class="sub">Digite os números do vídeo. Eu te digo <b>o que fazer</b> — em uma frase.</div>
+
+  <div class="card">
+    <div class="step">1. Digite o que você tem (pode deixar em branco o que não souber)</div>
+
+    <div class="field">
+      <label><div class="fname">Hook Rate</div><div class="fhint">Reproduções de 3 seg ÷ Impressões. Ela parou o dedo?</div></label>
+      <input type="text" inputmode="decimal" id="hook" placeholder="ex: 28"><span class="unit">%</span>
+    </div>
+    <div class="field">
+      <label><div class="fname">Hold Rate</div><div class="fhint">ThruPlays ÷ Impressões. Ela ficou até o fim?</div></label>
+      <input type="text" inputmode="decimal" id="hold" placeholder="ex: 9"><span class="unit">%</span>
+    </div>
+    <div class="field">
+      <label><div class="fname">CTR (link)</div><div class="fhint">Taxa de cliques no link. Ela quis conhecer?</div></label>
+      <input type="text" inputmode="decimal" id="ctr" placeholder="ex: 1,2"><span class="unit">%</span>
+    </div>
+    <div class="field">
+      <label><div class="fname">CPA — custo por compra</div><div class="fhint">Quanto custou cada venda desse vídeo</div></label>
+      <input type="text" inputmode="decimal" id="cpa" placeholder="ex: 78"><span class="unit">R$</span>
+    </div>
+    <div class="field">
+      <label><div class="fname">Frequência</div><div class="fhint">Só pra vídeo antigo/campeão. Quantas vezes a mesma pessoa viu</div></label>
+      <input type="text" inputmode="decimal" id="freq" placeholder="ex: 3,5"><span class="unit">&nbsp;</span>
+    </div>
+    <div class="gasto">
+      <input type="checkbox" id="gastou" checked>
+      <label for="gastou">Esse vídeo já gastou <b>R$300 ou mais</b></label>
+    </div>
+  </div>
+
+  <button type="button" id="btn">ME DIZ O QUE FAZER →</button>
+
+  <div id="resultado"></div>
+
+  <div class="foot">Referências: beauty DTC Brasil + conta L'Amazonie (jul/2026 · AOV R$209 · ROAS alvo 2,45x).<br>
+  Regra da casa: conserta o PRIMEIRO sinal vermelho da fila — Hook → Retenção → Clique → Compra.</div>
+</div>
+
+<script>
+function num(id){
+  var v = document.getElementById(id).value;
+  if (v === null || v === '') return null;
+  v = ('' + v).replace('R$', '').replace('%', '').replace(/\s/g, '').replace(',', '.');
+  var n = parseFloat(v);
+  return isNaN(n) ? null : n;
+}
+
+function faixa(v, otimo, bom, inverso){
+  if (v === null) return 'off';
+  if (!inverso){ if (v >= otimo) return 'ok'; if (v >= bom) return 'warn'; return 'bad'; }
+  else { if (v <= otimo) return 'ok'; if (v <= bom) return 'warn'; return 'bad'; }
+}
+
+var NOMES = {hook:'Hook', hold:'Retenção', ctr:'Clique', cpa:'CPA', freq:'Frequência'};
+var FAIXAS_TXT = {hook:'>35% · 25-35% · <25%', hold:'>12% · 8-12% · <8%', ctr:'>1,5% · 1-1,5% · <1%', cpa:'<R$70 · 70-85 · >R$85', freq:'<2,5 · 2,5-4 · >4'};
+
+function diagnostico(){
+  var hook = num('hook'), hold = num('hold'), ctr = num('ctr'), cpa = num('cpa'), freq = num('freq');
+  var gastou = document.getElementById('gastou').checked;
+
+  var f = {
+    hook: faixa(hook, 35, 25, false),
+    hold: faixa(hold, 12, 8, false),
+    ctr:  faixa(ctr, 1.5, 1.0, false),
+    cpa:  faixa(cpa, 70, 85, true),
+    freq: faixa(freq, 2.5, 4.0, true)
+  };
+
+  var cls, titulo, corpo, acaoTit = '', acao = '';
+
+  var funilVerde = true;
+  var ks = ['hook','hold','ctr'];
+  for (var i = 0; i < ks.length; i++){
+    if (f[ks[i]] !== 'ok' && f[ks[i]] !== 'off') funilVerde = false;
+  }
+  var algumPreenchido = (hook !== null || hold !== null || ctr !== null || cpa !== null || freq !== null);
+
+  var temAmarelo = false, primeiroAmarelo = null;
+  var ordem = ['hook','hold','ctr','cpa'];
+  for (var j = 0; j < ordem.length; j++){
+    if (f[ordem[j]] === 'warn'){ temAmarelo = true; if (primeiroAmarelo === null) primeiroAmarelo = ordem[j]; }
+  }
+
+  if (!algumPreenchido){
+    cls = 'v-info'; titulo = 'Digite pelo menos um número';
+    corpo = 'Preencha o que você tiver — mesmo só o Hook Rate já dá diagnóstico. Pode usar vírgula ou ponto (1,2 ou 1.2).';
+  }
+  else if (!gastou){
+    cls = 'v-info'; titulo = 'Cedo demais pra julgar';
+    corpo = 'Esse vídeo ainda não gastou R$300. Antes disso os números oscilam demais e qualquer decisão é chute.';
+    acaoTit = 'O que fazer:'; acao = 'Nada. Deixa rodar até R$300 de gasto e volta aqui. Não mexe, não pausa, não regrava.';
+  }
+  else if (f.freq === 'bad' && (f.cpa === 'bad' || f.cpa === 'warn')){
+    cls = 'v-warn'; titulo = 'Fadiga — o vídeo cansou, não fracassou';
+    corpo = 'Frequência acima de 4 com CPA piorando: as mesmas pessoas já viram esse vídeo muitas vezes. Ele foi um campeão e está se aposentando — isso é normal e acontece com TODO vídeo bom.';
+    acaoTit = 'O que fazer:'; acao = 'Grave a substituição usando o MESMO ângulo desse campeão (a dor já provou que funciona): hook novo, roupa nova, cenário novo. É o winner mais barato que existe.';
+  }
+  else if (f.hook === 'bad'){
+    cls = 'v-bad'; titulo = 'Regrava os 3 primeiros segundos';
+    corpo = 'O dedo dela não parou. O resto do vídeo nem importa ainda — ninguém chegou lá. O miolo pode estar ótimo: aproveita ele.';
+    acaoTit = 'O que fazer:'; acao = 'Regrave SÓ o começo com OUTRA fórmula de hook (se era confissão, tenta pergunta-espelho ou "não faça isso"). Primeira palavra já forte, zero respiro antes dela. Dica de ouro: grava 3 hooks diferentes pro mesmo miolo.';
+  }
+  else if (f.hold === 'bad'){
+    cls = 'v-bad'; titulo = 'Encurta o miolo';
+    corpo = 'O hook prendeu, mas ela foi embora no meio. O vídeo está comprido ou demora a entregar o que o hook prometeu.';
+    acaoTit = 'O que fazer:'; acao = 'Corte todo segundo que não avança a história. Entregue a promessa do hook ANTES da metade. Troque enquadramento a cada 3-5 segundos. Mire 20-30 segundos no total.';
+  }
+  else if (f.ctr === 'bad'){
+    cls = 'v-bad'; titulo = 'Fortalece o final do vídeo';
+    corpo = 'Ela assistiu, gostou... e não clicou. O vídeo entretém mas não vende: falta mostrar o produto como A solução, e falta um convite direto.';
+    acaoTit = 'O que fazer:'; acao = 'Refaça o final: produto na tela, resultado claro, e UM convite simples ("toca no link e conhece"). Se tiver oferta (Kit 2 mais vendido), fala dela. O miolo e o hook ficam como estão.';
+  }
+  else if (f.cpa === 'bad' && funilVerde){
+    cls = 'v-info'; titulo = 'NÃO é culpa do seu vídeo!';
+    corpo = 'Hook, retenção e clique estão bons — o vídeo está aprovado. Se a venda está cara, o problema é oferta, página ou público. Regravar não resolve nada.';
+    acaoTit = 'O que fazer:'; acao = 'Nada no vídeo. Manda mensagem pro Pedro/Daniel: "funil verde, CPA alto — problema é de mídia/página". E parte pro próximo brief.';
+  }
+  else if (temAmarelo){
+    var dicas = {
+      hook: 'Teste 2 hooks novos pro mesmo miolo — dá pra subir de bom pra ótimo.',
+      hold: 'Aperte o ritmo: corte 3-5 segundos do miolo e entregue a promessa mais cedo.',
+      ctr: 'Deixe o convite final mais direto e o produto mais visível.',
+      cpa: 'Está no limite do aceitável (R$70-85). Segura como está e observa por 3-4 dias: melhorou, promove; piorou, volta aqui.'
+    };
+    cls = 'v-warn'; titulo = 'Bom — dá pra ficar ótimo';
+    corpo = 'Nenhum sinal vermelho, mas o "' + NOMES[primeiroAmarelo] + '" está na faixa amarela. Vale um ajuste fino, sem regravar tudo.';
+    acaoTit = 'O que fazer:'; acao = dicas[primeiroAmarelo];
+  }
+  else {
+    cls = 'v-ok'; titulo = 'WINNER — não toca nele!';
+    corpo = 'Todos os sinais preenchidos estão verdes. Esse vídeo está vendendo — mexer agora só atrapalha.';
+    acaoTit = 'O que fazer:'; acao = '1) Avisa o Pedro pra promover pra campanha de campeões. 2) Grava VARIAÇÕES dele: mesmo ângulo, hooks e cenários novos — é assim que se multiplica um winner antes da fadiga chegar.';
+  }
+
+  var mapCls = {ok:'p-ok', warn:'p-warn', bad:'p-bad', off:'p-off'};
+  var mapLab = {ok:'ÓTIMO', warn:'BOM', bad:'RUIM', off:'—'};
+  var todas = ['hook','hold','ctr','cpa','freq'];
+  var pills = '';
+  for (var m = 0; m < todas.length; m++){
+    var k = todas[m];
+    pills += '<div class="pill ' + mapCls[f[k]] + '">' + NOMES[k] + ': ' + mapLab[f[k]] + '<small>' + FAIXAS_TXT[k] + '</small></div>';
+  }
+
+  var r = document.getElementById('resultado');
+  r.innerHTML =
+    '<div class="card"><div class="semaforo">' + pills + '</div></div>' +
+    '<div class="verdict ' + cls + '"><h2>' + titulo + '</h2>' +
+    '<p>' + corpo + '</p>' +
+    (acao ? '<div class="acao"><b>' + acaoTit + '</b>' + acao + '</div>' : '') +
+    '</div>';
+  r.style.display = 'block';
+  if (r.scrollIntoView) r.scrollIntoView(true);
+}
+
+document.getElementById('btn').onclick = diagnostico;
+</script>
+</body>
+</html>
